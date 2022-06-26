@@ -3,18 +3,30 @@
 const game = (() => {
   // Gameboard created using module pattern
   const gameBoard = (() => {
-    // Create and fill the grid array
-    let grid = new Array(3).fill(0);
-    grid.forEach((_, i) => {
-      grid[i] = new Array(3).fill("0");
-    });
-    console.log(grid);
-    const changeCell = (row, column, symbol) => {
+    // Declare grid so we can operate on it
+    let grid;
+
+    const create = () => {
+      grid = new Array(3).fill(0);
+      grid.forEach((_, i) => {
+        grid[i] = new Array(3).fill("0");
+      });
+
+      console.log(grid);
+      return grid;
+    };
+
+    const change = (row, column, symbol) => {
       grid[row][column] = symbol;
       console.log(grid);
     };
+
+    // Create and fill the grid array
+    create();
+
     return {
-      changeCell,
+      create,
+      change,
     };
   })();
 
@@ -26,7 +38,9 @@ const game = (() => {
   // Players created using factory pattern
   player1 = playerCreator();
   player2 = playerCreator();
+
   return {
-    changeCell: gameBoard.changeCell,
+    createGrid: gameBoard.create,
+    changeCell: gameBoard.change,
   }
 })();
