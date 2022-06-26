@@ -2,35 +2,61 @@
 // All game logic and object contains here
 const game = (() => {
   // Gameboard created using module pattern
-  const gameBoard = ((size) => {
-    // Declare grid so we can operate on it
-    let grid;
+  const gameBoard = (() => {
+    // Declare private grid so we can operate on it
+    let _grid;
 
     // Create initialises grid values so we can
     // both create and reset grid with this function
-    const create = () => {
-      grid = new Array(size).fill(0);
-      grid.forEach((_, i) => {
-        grid[i] = new Array(size).fill("0");
+    const create = (size) => {
+      _grid = new Array(size).fill(0);
+      _grid.forEach((_, i) => {
+        _grid[i] = new Array(size).fill("0");
       });
-
-      console.log(grid);
     };
 
     // Change allows us to modify any grid cell
     const change = (row, column, symbol) => {
-      grid[row][column] = symbol;
-      console.log(grid);
+      _grid[row][column] = symbol;
+    };
+
+    // Public getter for grid so we can display it
+    const grid = () => {
+      return _grid;
     };
 
     return {
+      grid,
       create,
       change,
     };
-  })(4);
-  console.log(gameBoard);
+  })();
 
-  gameBoard.create();
+  // Initialise board
+  gameBoard.create(3);
+
+  // Clears and redraws board
+  const displayBoard = () => {
+    const gameHolder = document.querySelector(".game");
+    while (gameHolder.hasChildNodes()) {
+      gameHolder.removeChild(gameHolder.lastChild);
+    }
+    for (row in gameBoard.grid()) {
+      const rowHolder = document.createElement("div");
+      rowHolder.classList.toggle("row");
+      for (column in gameBoard.grid()[row]) {
+        const cellHolder = document.createElement("div");
+        cellHolder.classList.toggle("cell");
+        cellHolder.textContent = gameBoard.grid()[row][column];
+        rowHolder.appendChild(cellHolder);
+      }
+      gameHolder.appendChild(rowHolder);
+    }
+  };
+
+  displayBoard();
+  gameBoard.change(1, 1, "X");
+  displayBoard();
 
   // Player factory
   const playerCreator = () => {
