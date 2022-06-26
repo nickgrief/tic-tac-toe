@@ -47,6 +47,13 @@ const game = (() => {
       for (column in gameBoard.grid()[row]) {
         const cellHolder = document.createElement("div");
         cellHolder.classList.toggle("cell");
+        const defaultColour = cellHolder.style.background;
+        cellHolder.addEventListener("click", () => {
+          cellHolder.style.background = 'pink';
+          setTimeout(() => {
+            cellHolder.style.background = defaultColour;
+          }, 150);
+        })
         cellHolder.textContent = gameBoard.grid()[row][column];
         rowHolder.appendChild(cellHolder);
       }
@@ -59,7 +66,7 @@ const game = (() => {
   displayBoard();
 
   // Player factory
-  const playerCreator = () => {
+  const playerCreator = (symbol) => {
     return {};
   };
 
