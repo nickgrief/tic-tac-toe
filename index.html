@@ -12,7 +12,18 @@
 
 <body>
   <h1>Tic Tac Toe</h1>
-  <div class="game"></div>
+  <div class="holder">
+    <div class="game"></div>
+    <div class="controls">
+      <div>
+        <label for="myRange">Board Size</label>
+        <input type="range" min="3" max="12" value="3" class="size" id="myRange"
+          oninput="this.nextElementSibling.value = this.value">
+        <output>choose size</output>
+      </div>
+      <button class="reset">New Game</button>
+    </div>
+  </div>
 </body>
 
 </html>
