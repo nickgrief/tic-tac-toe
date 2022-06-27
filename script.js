@@ -34,14 +34,10 @@ const game = (() => {
   })();
 
   const makeTurn = (row, column) => {
-    console.log(winner)
     if (winner == null && gameBoard.grid()[row][column] === "") {
-      console.log(winner);
       gameBoard.change(row, column, activePlayer.symbol);
-
       if (checkWin(row, column, activePlayer.symbol)) {
         winner = activePlayer.symbol;
-        console.log(winner);
       }
       if (activePlayer === player1) {
         activePlayer = player2;
@@ -67,7 +63,7 @@ const game = (() => {
     let symbolCounter;
     // Check vertical
     symbolCounter = 0;
-    for (i in gridHeight) {
+    for (let i in gameBoard.grid()[row]) {
       if (gameBoard.grid()[i][column] === symbol) {
         symbolCounter++;
         if (symbolCounter === 3) return true;
@@ -191,7 +187,5 @@ const game = (() => {
     resetBoard();
   })
 
-
-  return {
-  }
+  return {}
 })();
