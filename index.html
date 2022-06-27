@@ -14,15 +14,22 @@
   <h1>Tic Tac Toe</h1>
   <div class="holder">
     <div class="game"></div>
-    <div class="controls">
+    <fieldset>
+      <legend>Choose a mode to play in:</legend>
       <div>
-        <label for="myRange">Board Size</label>
-        <input type="range" min="3" max="9" value="3" class="size" id="myRange"
-          oninput="this.nextElementSibling.value = this.value">
-        <output>choose size</output>
+        <input type="radio" name="mode" id="no" checked>
+        <label for="no">No AI (2 players)</label>
       </div>
+      <div>
+        <input type="radio" name="mode" id="dumb">
+        <label for="dumb">Dumb AI (player vs pc)</label>
+      </div>
+      <!-- <div>
+        <input type="radio" name="mode" id="smart">
+        <label for="smart">Smart AI (player vs pc)</label>
+      </div> -->
       <button class="reset">New Game</button>
-    </div>
+    </fieldset>
   </div>
 </body>
 

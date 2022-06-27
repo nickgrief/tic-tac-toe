@@ -45,7 +45,41 @@ const game = (() => {
         activePlayer = player1;
       }
     }
+
+    isFull = checkFull();
+
+    // DUMB AI
+    if (winner == null && !isFull && gameMode === "dumb" && activePlayer === player2) {
+      let isAvailible = false;
+      let spotRow;
+      let spotColumn;
+      while (!isAvailible) {
+        // Pick random spot
+        spotRow = Math.floor(Math.random() * 3);
+        spotColumn = Math.floor(Math.random() * 3);
+        // Check if it's availible
+        isAvailible = gameBoard.grid()[spotRow][spotColumn] === "";
+      }
+      // Made sure it's availible make turn
+      makeTurn(spotRow, spotColumn);
+    }
     resetBoard();
+  }
+
+  const checkFull = () => {
+    let counter = 0;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (gameBoard.grid()[i][j] != "") {
+          counter++;
+        }
+      }
+    }
+    if (counter === 9) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // Input is last plays row, column and symbol
@@ -178,10 +212,18 @@ const game = (() => {
   let activePlayer = player1;
   let winner = null;
 
-  let resetBtn = document.querySelector(".reset");
-  let sizeSlider = document.querySelector(".size");
+  let isFull = false;
+
+  const modeBtns = document.getElementsByName("mode");
+  let gameMode;
+  const resetBtn = document.querySelector(".reset");
   resetBtn.addEventListener("click", () => {
-    gameBoard.create(Number(sizeSlider.value));
+    gameBoard.create(3);
+    modeBtns.forEach((element) => {
+      if (element.checked) {
+        gameMode = element.id;
+      }
+    });
     winner = null;
     activePlayer = player1;
     resetBoard();

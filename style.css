@@ -2,7 +2,7 @@
   display: flex;
 }
 
-.controls {
+fieldset {
   display: flex;
   flex-direction: column;
 }
